@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Houdini Highlight worklet</title>
+    <style>
+        /*
+            Declares the custom properties for the highlight paint worklet
+        */
+        @property --highlight-color {
+            syntax: '<color>';
+            inherits: false;
+            initial-value: #FFEE00;
+        }
+
+        @property --highlight-angle {
+            syntax: '<angle>';
+            inherits: false;
+            initial-value: 15deg;
+        }
+
+
+        h1, h2, h3, h4, h5, h6, textarea {
+            /* Fallback for browsers that can't display the CSS Houdini stuff */
+            background-image: linear-gradient(#FFEE00, #FFEE00); 
+            /* Using our paint worklet */
+            background-image: paint(highlight);
+            /* Using custom properties for our paint worklet */
+            --highlight-color: #FFEE00;
+            --highlight-angle: 15deg;
+
+            padding: 5px 20px;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #2C2C2C;
+        }
+    </style>
+</head>
+<body>
+    <h1>My H1 Tag</h1>
+    <h1>My other H1 Tag</h1>
+    <h2>My H2 tag</h2>
+    <textarea></textarea>
+    <script>
+        // Registering our paint worklet module
+        CSS.paintWorklet.addModule('highlight.js');
+
+        // Register custom properties with JS
+    /* 
+        CSS.registerProperty({
+        name: `--highlight-color`,
+        syntax: '<color>',
+        inherits: false,
+        initialValue: '#FFEE00'
+    });
+    
+    CSS.registerProperty({
+        name: `--highlight-angle`,
+        syntax: '<angle>',
+        inherits: false,
+        initialValue: '15deg'
+    }); */
+    </script>
+</body>
+</html>
